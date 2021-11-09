@@ -13,26 +13,20 @@ export class AppController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Get('homeByLocation')
-  public getHomesByLocation(): HomeDTO[] {
-    return this.appService.getHomesByLocation();
+  @Post('homesByLocation')
+  public getHomesByLocation(centerLocation: string, locationBoundary: string[]): HomeDTO[] {
+    return this.appService.getHomesByLocation(centerLocation, locationBoundary);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('createNewHome')
-  public createNewHome(@Body() request: HomeDTO): HomeDTO {
+  public async createNewHome(@Body() request: HomeDTO): Promise<HomeDTO> {
     return this.appService.createNewHome(request);
-  }
-
-  @HttpCode(HttpStatus.OK)
-  @Post('pricePerSqFt')
-  public getPricePerSqFt(@Body() request: HomeDTO): number {
-    return this.appService.getPricePerSqFt();
   }
   
   @HttpCode(HttpStatus.OK)
-  @Post('countPerArea')
-  public countHomesPerArea(@Body() request: HomeDTO): number {
-    return this.appService.countHomesPerArea();
+  @Post('homesCountPerArea')
+  public homesCountPerArea(@Body() location: string): number {
+    return this.appService.homesCountPerArea(location);
   }
 }

@@ -9,6 +9,7 @@ import {
 	IsUUID,
 } from 'class-validator';
 import { HomeTypes, Parking } from '../enums/home.enum';
+import { Geocode } from './geocode.dto';
 
 export class HomeDTO {
 	@IsNotEmpty()
@@ -54,6 +55,9 @@ export class HomeDTO {
 	@IsNotEmpty()
 	@IsBoolean()
 	readonly active: boolean;
+
+	@IsOptional()
+	geocode?: Geocode;
 
 	// base64 images
 	@IsNotEmpty()
