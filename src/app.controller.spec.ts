@@ -15,8 +15,9 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return mock home object', () => {
+      const homeData = appController.getHomeById('c573b45f-4dea-4eb5-a2df-54e62414a31c');
+      expect(homeData.name).toBe('Our Home');
     });
   });
 });
