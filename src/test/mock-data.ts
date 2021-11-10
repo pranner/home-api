@@ -15,7 +15,7 @@ export const homeMock: HomeDTO = {
 }
 
 export const homeMock_condo: HomeDTO = {
-	uuid: 'a453b45f-4dea-4eb5-a2df-54e62414b41h',
+	uuid: 'de1371d6-829e-41dd-80bd-056b8e6c34e9',
 	name: 'Our Condo',
 	address: '456 Condo St, Toronto, ON M5T1G4',
 	description: 'condo description',

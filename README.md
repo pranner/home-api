@@ -35,6 +35,34 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Docs + Trying out the App
+
+API Docs have been added with the help of Swagger.
+
+After starting the app, navigate to the url below to see the controllers and data objects in this app. 
+
+You can also make requests and try out the app with Swagger. 
+
+```bash
+http://localhost:3000/api-docs/
+```
+
+Sample Home Data -- modify for create new homes endpoint
+```json
+{
+  "uuid": "c763e33f-c8d4-4f5b-b296-a833774a4a68",
+  "name": "Newest Home",
+  "address": "425 Homer St, TORONTO, ON",
+  "description": "My newest home wow",
+  "type": "Duplex",
+  "bedrooms": 2,
+  "bathrooms": 1,
+  "size": 1440,
+  "parking": "Double Garage Attached",
+  "active": true
+}
+```
+
 ## Test
 
 ```bash

@@ -1,8 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { homeMock, homeMock_condo, homesArray } from './test/mock-data';
 import { HomeDTO } from './dto/home.dto';
-import { Geocode } from './dto/geocode.dto';
+import { GeocodeDTO } from './dto/geocode.dto';
 import { HttpService } from '@nestjs/axios';
+import { AxiosResponse } from 'axios';
+import { GoogleMapsGeocode } from './interface/googlemaps.interface';
+import { LocationDTO } from './dto/location.dto';
 
 @Injectable()
 export class AppService {
@@ -19,37 +22,37 @@ export class AppService {
   }
 
   public getHomesByLocation(
-    centerLocation: string,
-    locationBoundary: string[],
+    location: LocationDTO,
     ): HomeDTO[] {
       // STUB get the homes in a certain area by the starting location and view boundary
+      // Not efficient to load all homes at once so this makes it better
     return [homeMock, homeMock_condo];
   }
 
-  public async createNewHome(params: HomeDTO): Promise<HomeDTO> {
-    const geocode = this.getLatitudeLongitudeFromAddress(params.address);
-    params.geocode = await geocode;
+  public async createHome(params: HomeDTO): Promise<HomeDTO> {
+    const geocode = await this.getLatitudeLongitudeFromAddress(params.address);
+    params.geocode = geocode;
     homesArray.push(params);
     console.log(homesArray); // usually a db operation
     return params;
   }
 
-  public homesCountPerArea(location: string): number {
+  public homesCountPerArea(location: LocationDTO): number {
     // Useful for showing total homes for sale on a map
     // Not efficient to load all homes at once so this is better
     // STUB
     return 10;
   }
 
-  private async getLatitudeLongitudeFromAddress(address: string): Promise<Geocode> {
+  private async getLatitudeLongitudeFromAddress(address: string): Promise<GeocodeDTO> {
     // ideally here you would connect to the Google Geocoding API to get this info
     const sanitizedAddress = this.sanitizeAddressForGoogleApiURL(address);
     const url = `https://maps.googleapis.com/maps/api/geocode/json?${sanitizedAddress}`;
-    try{
-      const googleMapsData = await this.httpService.get(url).toPromise();
+    try {
+      const googleMapsData: AxiosResponse<GoogleMapsGeocode> = await this.httpService.get(url).toPromise();
       const geocodeData = {
-        latitude: googleMapsData.data.geometry.latitude,
-        longitude: googleMapsData.data.geometry.longitude,
+        latitude: googleMapsData.data.geometry.location.lat,
+        longitude: googleMapsData.data.geometry.location.lng,
         // return geocodeData; but this wont work since we dont have google api key to get values
       }
     } catch (err) {

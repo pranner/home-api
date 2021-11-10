@@ -26,7 +26,7 @@ describe('AppController', () => {
     it('should throw a NotFoundException when home not found', () => {
       expect.assertions(1);
       try {
-        const missingHomeData = appController.getHomeById('abc_not_a_home');
+        appController.getHomeById('abc_not_a_home');
       } catch (err) {
         expect(err).toBeInstanceOf(NotFoundException)
       }
